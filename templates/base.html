@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  {% load static %}
+  <meta charset="utf-8">
+  <title>{% block titulo %}Joyería FB{% endblock  %}</title>
+  <link rel="stylesheet" href=" {% static 'css/bootstrap.min.css'%}">
+  <link rel="stylesheet" href="{% static 'css/all.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=GFS+Didot" rel="stylesheet">
+  <style type="text/css">
+    body{
+      font-family: "GFS Didot", serif;
+      {% block body_css %}
+      background-image: url('/media/fotos/background.jpeg');
+      background-size: cover;
+      {% endblock  %}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="fluid-container" style="background-color: rgb(34, 34, 34); position: relative">
+
+    <div class="row">
+      <div class="col m-3">
+
+        <nav class="navbar navbar-expand-lg navbar-dark">
+          <a class="navbar-brand ml-2" href="{% url  'inicio' %}"><img src="/media/fotos/logo.png" alt="" width="100"></a>
+          <button class="navbar-toggler" type="button"></button>
+
+          {% if not request.user.is_authenticated and not request.user.in_staff %}
+            <a class="navbar-brand nav-item ml-5" href="{% url  'lista_categorias' %}">Productos</a>
+            <button class="navbar-toggler nav-link" type="button"></button>
+          {% endif %}
+
+          <form class="form-inline ml-2 my-lg-0">
+            <input class="form-control mr-sm-1" type="text" placeholder="Búsqueda">
+            <button class="btn btn- my-2 my-sm-0" type="submit">Búsqueda</button>
+          </form>
+        </nav>
+      </div>
+
+      <div class="col d-flex justify-content-end m-3 align-items-center">
+        {% if request.user.is_authenticated %}
+            {% if request.user.is_staff %}
+                <a class="mr-3" href="{% url  'lista_productos' %}"><button class="btn btn-info" type="button">Productos</button></a>
+                <a class="mr-3" href="{% url  'lista_categorias' %}"><button class="btn btn-info" type="button">Categorías</button></a>
+                <a class="mr-3" href="{% url  'lista_materiales' %}"><button class="btn btn-info" type="button">Materiales</button></a>
+            {% endif %}
+            <a class="" href="{% url  'editar_perfil' request.user.usuario.id %}"><button class="btn btn-success mr-3" type="button">Perfil de {{ user.username }}</button></a>
+            <a class="" href="{% url  'logout' %}"><button class="btn btn-warning" type="button">Logout</button></a>
+        {% else %}
+          <a class="" href="{% url  'login' %}"><button class="btn btn-info" type="button">Ingresar</button></a>
+          <a class="" href="{% url  'sign_up' %}"><button class="btn btn-info ml-3" type="button">Registrarme</button></a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+
+  {% block contenido %}{% endblock  %}
+
+  <script src="/static/js/jquery-3.3.1.slim.min.js"></script>
+  <script src="/static/js/popper.min.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block titulo %}Lista de Materiales{% endblock %}
+
+{% block contenido %}
+
+  <div class="container">
+
+
+    <div class="d-flex align-items-center justify-content-center text-center">
+
+      <h1 class="text-center mt-5 mr-5">MATERIALES</h1>
+      {% if request.user.is_staff %}
+        <a class="mt-5" href="{% url 'agregar_material' %}"><button type="button" name="AgregarMaterial" class="btn btn-success ml-5">Crear Material</button></a>
+      {% endif %}
+
+    </div>
+
+
+    {% for material in object_list %}
+
+      {% if forloop.counter0 != 0 and forloop.counter0|divisibleby:"3" %}
+        </div>
+      {% endif %}
+      {% if forloop.counter0|divisibleby:"3" %}
+        <div class="row mt-2">
+      {% endif %}
+      <div class="col-lg-4 col-sm-6 portfolio-item p-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a class="text-secondary" href="{{ material.get_absolute_url }}">{{ material.name }}</a>
+            </h4>
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}
+
+  </div>
+
+{% endblock  %}

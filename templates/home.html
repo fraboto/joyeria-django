@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+	<div class="container d-flex w-50 text-center align-items-center" style="height: 450px">
+		<div class="col">
+
+			<h2 class="row">Bienvenido a la página Web de la Joyería F.B. ¡Gracias por visitarnos!</h2>
+
+			<div class="row mt-5">
+				<a class="offset-4" href="{% url 'lista_categorias' %}"><button type="button" class="btn btn-outline-info" name="productos" >Visite nuestra  galería de productos</button></a>
+			</div>
+		</div>
+	</div>
+{% endblock  %}
